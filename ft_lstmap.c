@@ -1,22 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 20:23:12 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/17 20:23:16 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/07/18 17:47:00 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/07/18 17:53:27 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
-void	ft_putendl_fd(char *s, int fd)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *),
+		void (*del)(void *))
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
+	t_list	*new;
+	t_list	*tmp;
+
+	new = ft_lstnew(f(lst->content));
+	if (!new)
+		return (NULL);
+	tmp = new;
+	lst = lst->next;
+	while (lst)
+	{
+		new->next = ft_lstnew(f(lst->content));
+		if (!new->next)
+		{
+			ft_lstclear(&new, del);
+			return (NULL);
+		}
+		new = new->next;
+		lst = lst->next;
+	}
+	new->next = NULL;
+	return (tmp);
 }

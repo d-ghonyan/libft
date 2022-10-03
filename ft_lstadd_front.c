@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 21:02:19 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/10 21:09:40 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/07/18 17:34:25 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/07/18 17:39:35 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
-{
-	return (c == '\r' || c == '\t'
-		|| c == '\v' || c == '\n'
-		|| c == '\f' || c == ' ');
-}
+#include "libft.h"
 
-int	ft_isalnum(int c)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	return ((c >= 65 && c <= 90)
-		|| (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57));
+	if (!lst || !new)
+		return ;
+	if (!(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	new->next = (*lst);
+	*lst = new;
 }

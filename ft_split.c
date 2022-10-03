@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dghonyan <dghonyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:11:34 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/16 20:53:45 by dghonyan         ###   ########.fr       */
+/*   Updated: 2022/08/27 15:37:02 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "libft.h"
 
 static size_t	count(char const *s, char c)
 {
@@ -37,7 +36,7 @@ static size_t	count(char const *s, char c)
 	return (count);
 }
 
-static size_t	ft_strlen(char const *s, char c, size_t i)
+static size_t	ft_strlen_spl(char const *s, char c, size_t i)
 {
 	size_t	len;
 
@@ -50,7 +49,7 @@ static size_t	ft_strlen(char const *s, char c, size_t i)
 	return (len);
 }
 
-static char	*ft_strdup(const char *s, char c, size_t len, size_t *i)
+static char	*ft_strdup_spl(const char *s, char c, size_t len, size_t *i)
 {
 	char	*res;
 	size_t	j;
@@ -72,22 +71,31 @@ static char	*ft_strdup(const char *s, char c, size_t len, size_t *i)
 	return (tmp);
 }
 
+static char	**hello(char **arr)
+{
+	if (arr)
+		free_ptr_arr(arr);
+	return (NULL);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**res;
 	size_t	i;
 
 	i = 0;
-	res = (char **)malloc((count(s, c) + 1) * sizeof (*res));
+	if (!s)
+		return (NULL);
+	res = malloc((count(s, c) + 1) * sizeof (*res));
 	if (!res)
 		return (NULL);
 	while (s[i])
 	{
 		if (s[i] != c)
 		{
-			*res = ft_strdup(s, c, ft_strlen(s, c, i) + 1, &i);
+			*res = ft_strdup_spl(s, c, ft_strlen_spl(s, c, i) + 1, &i);
 			if (!(*res))
-				return (NULL);
+				return (hello(res));
 			res++;
 		}
 		if (!s[i])

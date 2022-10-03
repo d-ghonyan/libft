@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 21:02:19 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/10 21:09:40 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/03/14 19:44:51 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/03/18 20:06:45 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
-{
-	return (c == '\r' || c == '\t'
-		|| c == '\v' || c == '\n'
-		|| c == '\f' || c == ' ');
-}
+#include "libft.h"
 
-int	ft_isalnum(int c)
+t_list	*ft_lstnew(void *content)
 {
-	return ((c >= 65 && c <= 90)
-		|| (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57));
+	t_list	*new;
+
+	new = malloc(sizeof (*new));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

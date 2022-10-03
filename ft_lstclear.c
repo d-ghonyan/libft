@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 21:02:19 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/10 21:09:40 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/07/18 17:39:48 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/07/18 17:46:52 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
-{
-	return (c == '\r' || c == '\t'
-		|| c == '\v' || c == '\n'
-		|| c == '\f' || c == ' ');
-}
+#include "libft.h"
 
-int	ft_isalnum(int c)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	return ((c >= 65 && c <= 90)
-		|| (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57));
+	t_list	*tmp;
+
+	if (!lst || !(*lst))
+		return ;
+	while (*lst)
+	{
+		tmp = *lst;
+		del((*lst)->content);
+		*lst = (*lst)->next;
+		free(tmp);
+	}
+	lst = NULL;
 }

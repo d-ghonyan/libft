@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/10 21:02:19 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/03/10 21:09:40 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/03/13 12:16:00 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/03/13 13:00:54 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char c)
+#include <stdlib.h>
+
+void	free_ptr_arr(char **arr)
 {
-	return (c == '\r' || c == '\t'
-		|| c == '\v' || c == '\n'
-		|| c == '\f' || c == ' ');
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
-int	ft_isalnum(int c)
+int	ptr_arr_len(char **arr)
 {
-	return ((c >= 65 && c <= 90)
-		|| (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57));
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return (0);
+	while (arr[i])
+		i++;
+	return (i);
 }

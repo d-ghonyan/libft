@@ -1,94 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dghonyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/09 17:56:10 by dghonyan          #+#    #+#             */
-/*   Updated: 2022/04/09 17:56:12 by dghonyan         ###   ########.fr       */
+/*   Created: 2022/04/10 16:53:56 by dghonyan          #+#    #+#             */
+/*   Updated: 2022/04/10 16:54:11 by dghonyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "libft.h"
 
-static int	has_nl(char *s, int i)
+static char	*ft_strjoin_for_read(char *s, char c)
 {
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		return (1);
-	return (0);
-}
+	size_t	i;
+	char	*res;
 
-static int	line_len(char *s, int i)
-{
-	int	len;
-
-	len = 0;
-	while (s[i] && s[i] != '\n')
-	{
-		i++;
-		len++;
-	}
-	if (s[i] == '\n')
-		return (len + 1);
-	return (len);
-}
-
-static char	*get_line(char *s, int *i)
-{
-	int		a;
-	char	*line;
-
-	line = (char *)malloc(sizeof (*line) * (line_len(s, *i) + 1));
-	if (!line)
-	{
-		free((void *)s);
+	i = 0;
+	res = (char *)malloc(sizeof (*res) * (ft_strlen(s) + 2));
+	if (!res)
 		return (NULL);
-	}
-	a = 0;
-	while (s[*i] && s[*i] != '\n')
+	while (i < ft_strlen(s))
 	{
-		line[a] = s[*i];
-		a++;
-		*i += 1;
+		res[i] = s[i];
+		i++;
 	}
-	if (s[*i] == '\n')
-	{
-		line[a++] = '\n';
-		*i += 1;
-	}
-	line[a] = '\0';
-	return (line);
+	free(s);
+	res[i] = c;
+	res[i + 1] = '\0';
+	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*s = NULL;
-	static int	i = 0;
-	char		temp[BUFFER_SIZE + 1];
-	int			a;
+	char	*s;
+	char	c;
+	int		rd;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL);
-	a = 1;
-	while (a != 0)
+	s = NULL;
+	rd = 0;
+	c = '\0';
+	while (c != '\n')
 	{
-		a = read(fd, temp, BUFFER_SIZE);
-		if (a == -1 || (a == 0 && (!s || s[i] == '\0')))
+		rd = read(fd, &c, 1);
+		if (rd == -1)
 		{
-			free((void *)s);
+			free(s);
 			return (NULL);
 		}
-		temp[a] = '\0';
-		s = ft_strjoin_gnl(s, temp);
-		if (!s)
-			return (NULL);
-		if (has_nl(s, i) || s[i] == '\0')
-			break ;
+		if (rd == 0)
+			return (s);
+		s = ft_strjoin_for_read(s, c);
 	}
-	return (get_line(s, &i));
+	return (s);
 }
