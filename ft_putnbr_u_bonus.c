@@ -77,7 +77,7 @@ void	ft_putnbr_u(unsigned int n, char c, int *count, t_flag flags)
 		a = flags.width - (len_u(n) + (flags.space || flags.plus) + tf);
 		hello(!flags.minus, a, count, flags.zero);
 		too_many_lines(flags, n, count, prec);
-		if (flags.space && n >= 0 && !flags.plus)
+		if (flags.space && !flags.plus)
 			*count += write(1, " ", 1);
 		_ft_putnbr_u(n, c, count, flags);
 		hello(flags.minus, a, count, flags.zero);

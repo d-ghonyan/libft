@@ -14,9 +14,6 @@
 
 void	_ft_putstr(char const *s, int *count, int prec)
 {
-	int		i;
-
-	i = 0;
 	if (!s)
 	{
 		write(1, "(null)", 6);
